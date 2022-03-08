@@ -12,6 +12,21 @@ int min(int x, int y)
 	return x < y ? x : y;
 }
 
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int> dp(amount + 1, 999999);
+        dp[0] = 0;
+        for (int i = 1; i < dp.size(); ++i) {
+            bool flag = true;
+            for (int j = 0; j < coins.size(); ++j) {
+                if (i >= coins[j] && dp[i - coins[j]] != -1) {
+                    dp[i] = min(dp[i], dp[i - coins[j]] + 1);
+                    flag = false;
+                }
+            }
+            if (flag) dp[i] = -1;
+        }
+        return dp.back();
+    }
 int coin_change()
 {
 	int i, j;
